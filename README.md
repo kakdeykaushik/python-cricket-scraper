@@ -48,7 +48,7 @@ CricInfo class takes match id to scrape the data.
 
 **A.** Google any cricket match you want. Visit Espncricinfo and get match id from url(highlighted number). `647261` in this case
 
-![img](images/img1.png)
+![img](https://raw.githubusercontent.com/kakdeykaushik/python-cricket-scraper/master/images/img1.png)
 
 
 

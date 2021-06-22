@@ -8,7 +8,7 @@ with open("README.md", "r") as fh:
 
 setup(
 	name="python-cricket-scraper",
-	version="0.1.1",
+	version="0.1.2",
 	description="python-cricket-scraper is built to get cricket data from Cricsheet and ESPNCricInfo",
 	long_description=long_description,
 	long_description_content_type='text/markdown',
