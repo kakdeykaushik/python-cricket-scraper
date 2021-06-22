@@ -1,0 +1,6 @@
+*.pyc
+__pycache__/
+build/
+dist/
+python_cricket_scraper.egg-info/
+TODO
