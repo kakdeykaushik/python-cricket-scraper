@@ -111,7 +111,7 @@ data = sheet.get_more_info()
 ---
 
 ## Contributing
-Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.
+[Pull requests](https://github.com/kakdeykaushik/python-cricket-scraper/pulls) are welcome. For major changes, please open an issue first to discuss what you would like to change.
 
 ---
 ## License
