@@ -289,6 +289,68 @@ class CricInfo:
 		df = pd.DataFrame(df)
 
 		return df
+		
+		
+	def batsman_vs_bowler(self, batsman_name, bowler_name):
+		"""Returns a DataFrame of all deliveries faced by the batsman against the bowler."""
+	batsman_id = None
+	bowler_id = None
+
+	# Get player IDs from match JSON
+	for player in self.json['matchPlayers']['playerDetails']:
+	if player['name'] == batsman_name:
+	    batsman_id = player['object_id']
+	elif player['name'] == bowler_name:
+	    bowler_id = player['object_id']
+
+	if batsman_id and bowler_id:
+	    break
+
+	if not (batsman_id and bowler_id):
+	raise ValueError(f"Could not find batsman '{batsman_name}' and/or bowler '{bowler_name}' in the match details.")
+
+	deliveries = []
+	for inning in self.json['innings']:
+	if inning['team'] == 'team1':
+	    batting_team = self.playing11().iloc[:, 0].tolist()
+	else:
+	    batting_team = self.playing11().iloc[:, 1].tolist()
+
+	if batsman_name not in batting_team:
+	    continue
+
+	for ball in inning['deliveries']:
+	    if 'batsman' not in ball or 'bowler' not in ball:
+		continue
+
+	    if ball['batsman']['name'] == batsman_name and ball['bowler']['name'] == bowler_name:
+		# Found a delivery faced by the batsman against the bowler
+		delivery = {
+		    'batsman': batsman_name,
+		    'bowler': bowler_name,
+		    'runs': ball['runs']['total'],
+		    'balls_faced': 1,
+		    'fours': 1 if ball['runs']['batsman'] == 4 else 0,
+		    'sixes': 1 if ball['runs']['batsman'] == 6 else 0,
+		    'dismissal': ball['wicket']['kind'] if 'wicket' in ball else 'not out'
+		}
+		deliveries.append(delivery)
+
+	if not deliveries:
+	raise ValueError(f"No deliveries found where batsman '{batsman_name}' faced bowler '{bowler_name}' in the match.")
+
+	# Aggregate deliveries by runs scored, balls faced, fours, and sixes
+	df = pd.DataFrame(deliveries).groupby(['batsman', 'bowler', 'dismissal']).agg({
+	'runs': 'sum',
+	'balls_faced': 'sum',
+	'fours': 'sum',
+	'sixes': 'sum'
+	}).reset_index()
+
+	# Add strike rate column
+	df['strike_rate'] = df['runs'] / df['balls_faced'] * 100
+
+	return df
 
 
 	def partnerships(self):
