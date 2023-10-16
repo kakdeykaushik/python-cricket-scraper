@@ -269,7 +269,7 @@ class CricInfo:
 		bowler_scorecard['economy'] = [inning[i]['inningBowlers'][j]['economy'] for i in range(number_of_innings) for j in range(len(inning[i]['inningBowlers']))]
 
 
-		batter_scorecard = pd.DataFrame(batter_scorecard).astype({"runs": np.int}, errors="ignore")
+		batter_scorecard = pd.DataFrame(batter_scorecard).astype({"runs": int}, errors="ignore")
 		bowler_scorecard = pd.DataFrame(bowler_scorecard)
 		teamdata = pd.DataFrame(team_data)
 		return batter_scorecard, bowler_scorecard, teamdata
