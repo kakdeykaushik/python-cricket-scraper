@@ -29,8 +29,8 @@ class CricInfo:
 
 	def _get_json(self):
 		'''Returns JSON.'''
-
-		page = requests.get(self.json_url)
+		headers = {'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_11_5) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/50.0.2661.102 Safari/537.36'}
+		page = requests.get(self.json_url, headers=headers)
 		return page.json()
 
 	def match_name(self):
